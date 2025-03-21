@@ -96,19 +96,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_26_112901) do
     t.index ["user_id"], name: "index_administrators_on_user_id"
   end
 
-  create_table "ahoy_events", id: :uuid, default: nil, force: :cascade do |t|
-    t.uuid "visit_id"
-    t.integer "user_id"
-    t.string "name"
-    t.jsonb "properties"
-    t.datetime "time", precision: nil
-    t.string "ip"
-    t.index ["name", "time"], name: "index_ahoy_events_on_name_and_time"
-    t.index ["time"], name: "index_ahoy_events_on_time"
-    t.index ["user_id"], name: "index_ahoy_events_on_user_id"
-    t.index ["visit_id"], name: "index_ahoy_events_on_visit_id"
-  end
-
   create_table "audits", id: :serial, force: :cascade do |t|
     t.integer "auditable_id"
     t.string "auditable_type"
@@ -405,13 +392,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_26_112901) do
     t.boolean "hide_money", default: false
   end
 
-  create_table "campaigns", id: :serial, force: :cascade do |t|
-    t.string "name"
-    t.string "track_id"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
-  end
-
   create_table "ckeditor_assets", id: :serial, force: :cascade do |t|
     t.string "data_file_name", null: false
     t.string "data_content_type"
@@ -472,6 +452,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_26_112901) do
   create_table "communities", id: :serial, force: :cascade do |t|
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+  end
+
+  create_table "cookies_vendors", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.string "cookie"
+    t.text "script"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cookie"], name: "index_cookies_vendors_on_cookie", unique: true
   end
 
   create_table "dashboard_actions", id: :serial, force: :cascade do |t|
